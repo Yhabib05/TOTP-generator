@@ -32,6 +32,27 @@ Generate a TOTP token with SHA256 algorithm:
 python script.py -s JBSWY3DPEHPK3PXP -a SHA256
 ```
 
+
+# Web Interface
+This project also includes a simple web interface built with Streamlit. You can generate 
+
+TOTP tokens interactively by adjjusting token length, algorithm, and validity period.
+
+## Features of the Web Interface:
+- Token Length: Choose a token length between 6 to 100 digits.
+
+- HMAC Algorithms: Select from SHA1, SHA256 or SHA512.
+
+- Validity Period: Set the token's validity (in seconds), or choose infinite validity.
+
+- Live Countdown: Displays a countdown timer until the TOTP token expires (unless infinite validity is selected).
+
+## Running the Web Interface:
+To launch the Streamlit interface:
+```sh
+streamlit run totp_app.py
+```
+
 ## References
 [RFC 6238: Specification of TOTP ](https://datatracker.ietf.org/doc/html/rfc6238)
 
