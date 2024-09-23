@@ -33,9 +33,11 @@ VALIDITY_PERIOD = 30 #valid for 30 seconds
 T0=0
 
 # Function to get the current time step
-def time_function(validity): 
-        current=floor(time.time()) # Get the current Unix time
-        return floor((current-T0)/validity) # Counter (T) that increases every X seconds
+def time_function(validity):
+       if validity == float('inf'):
+             return 0  # If validity is infinite, we assume the token should always be valid
+       current=floor(time.time()) # Get the current Unix time
+       return floor((current-T0)/validity) # Counter (T) that increases every X seconds
 
 # HMAC function for the 3 algorithms (SHA1, SHA256, SHA512)
 def HMAC(secret:str, crypto:str, counter: int):
@@ -62,7 +64,7 @@ def HMAC(secret:str, crypto:str, counter: int):
        return hmac.new(key,counter_bytes,hash_algorithm).digest()
        
 
-def truncate(hmac_result):
+def truncate(hmac_result,token_length):
        
        # Extract a 4-byte chunk from the HMAC result based on the offset
        offset =  hmac_result[-1] & 0x0F 
@@ -70,14 +72,16 @@ def truncate(hmac_result):
        truncated_int=int.from_bytes(truncated_hash)
 
        #Return the least significant 31 bits and generate the 6-digit token
-       return (truncated_int&0x7FFFFFF)%10**TOKEN_LENGTH 
-
+       if token_length==6:
+             return (truncated_int&0x7FFFFFF)%10**token_length 
+       #any other size
+       return truncated_int%(10**token_length)
 
 def totp(secret:str, algorithm, token_length, validity):
        
        counter=time_function(validity)
        hmac_result=HMAC(secret, algorithm, counter)
-       totp_token=truncate(hmac_result)
+       totp_token=truncate(hmac_result,token_length)
 
        return str(totp_token).zfill(token_length) #Pad zeros on the left to ensure the token length is satisfied
 
