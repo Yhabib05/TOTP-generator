@@ -1,7 +1,5 @@
 """
-Generate a a totp on click of a button, or a qr code ? 
-It Should be customizable for each user, the secret: changes for each user
-
+Generate a a totp on click of a button
 """
 import streamlit as st
 from totp import totp  # Import the TOTP function from totp.py
