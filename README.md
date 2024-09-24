@@ -1,11 +1,12 @@
 # TOTP Generator
 This project implements a Time-based One-Time Password (TOTP) generator using different HMAC algorithms. TOTP is based on the HMAC-based One-Time Password (HOTP) algorithm and uses the current time as a counter to generate time-sensitive codes.
 
-## A first look of the interface
-![screenshot](totp_generated.png)
 
 ## Try our TOTP generator here:
 [Totp-generator Demo ](https://totp-generator.streamlit.app/)
+
+## A first look of the interface
+<img src="totp_generated.png" alt="screenshot" width="500"/>
 
 
 ### Algorithms Supported:
